@@ -1,0 +1,40 @@
+name: 'gl_dimensional'
+version: '1.0.0'
+config-version: 2
+
+profile: 'gl_dimensional'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  gl_dimensional:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
+    reporting:
+      +materialized: table
+
+seeds:
+  gl_dimensional:
+    raw_gl_transactions:
+      +column_types:
+        transaction_date: date
+        debit_amount: double
+        credit_amount: double
+    raw_accounts:
+      +column_types:
+        valid_from: date
+        valid_to: date
+    raw_departments:
+      +column_types:
+        valid_from: date
+        valid_to: date

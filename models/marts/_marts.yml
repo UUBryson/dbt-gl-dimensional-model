@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: dim_account
+    description: "Account dimension, SCD type 2 (effective-dated versions)."
+    columns:
+      - name: account_key
+        tests: [unique, not_null]
+      - name: account_id
+        tests: [not_null]
+
+  - name: dim_department
+    description: "Department dimension, SCD type 2 (effective-dated versions)."
+    columns:
+      - name: department_key
+        tests: [unique, not_null]
+      - name: department_id
+        tests: [not_null]
+
+  - name: dim_fund
+    description: "Fund dimension, type 1 (no history)."
+    columns:
+      - name: fund_key
+        tests: [unique, not_null]
+      - name: fund_id
+        tests: [unique, not_null]
+
+  - name: dim_date
+    description: "Generated calendar with July-start fiscal year."
+    columns:
+      - name: date_key
+        tests: [unique, not_null]
+
+  - name: fct_gl_transaction
+    description: "General ledger fact. Grain: one row per transaction line."
+    columns:
+      - name: gl_transaction_key
+        tests: [unique, not_null]
+      - name: transaction_id
+        # grain protection: if this is ever non-unique the line grain collapsed
+        tests: [unique, not_null]
+      - name: account_key
+        tests:
+          - relationships:
+              to: ref('dim_account')
+              field: account_key
+      - name: department_key
+        tests:
+          - relationships:
+              to: ref('dim_department')
+              field: department_key
+      - name: fund_key
+        tests:
+          - relationships:
+              to: ref('dim_fund')
+              field: fund_key
+      - name: date_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key

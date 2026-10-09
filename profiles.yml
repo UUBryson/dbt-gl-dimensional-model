@@ -1,0 +1,9 @@
+# Local profile. Run dbt with:  dbt run --profiles-dir .
+# DuckDB runs in-process, so there are no credentials and nothing to provision.
+gl_dimensional:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: gl.duckdb
+      threads: 4

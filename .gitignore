@@ -1,0 +1,20 @@
+# dbt artifacts
+target/
+dbt_packages/
+logs/
+
+# local warehouse
+*.duckdb
+*.duckdb.wal
+
+# generated synthetic seeds (recreate with scripts/generate_gl.py)
+seeds/*.csv
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# dbt user cookie
+.user.yml

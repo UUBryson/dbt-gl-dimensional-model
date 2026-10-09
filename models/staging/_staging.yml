@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: stg_accounts
+    description: "Cleaned chart of accounts, effective-dated (one row per version)."
+    columns:
+      - name: account_id
+        tests: [not_null]
+  - name: stg_departments
+    description: "Cleaned departments, effective-dated (one row per version)."
+    columns:
+      - name: department_id
+        tests: [not_null]
+  - name: stg_funds
+    description: "Cleaned funds (type 1, no history)."
+    columns:
+      - name: fund_id
+        tests: [not_null, unique]
+  - name: stg_gl_transactions
+    description: "Cleaned GL postings, one row per transaction line."
+    columns:
+      - name: transaction_id
+        tests: [not_null, unique]
+      - name: journal_entry_id
+        tests: [not_null]
